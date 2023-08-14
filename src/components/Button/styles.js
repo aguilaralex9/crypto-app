@@ -1,16 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import { COLORS } from '../../constants/Colors';
 
-const styles = StyleSheet.create({
+const { LIGHT_BLUE } = COLORS;
+
+const styles = ScaledSheet.create({
   button: {
-    backgroundColor: 'blue', // Adjust the color as needed
-    borderRadius: 20, // Adjust the radius to control the roundness
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: LIGHT_BLUE,
+    borderRadius: '20@ms',
+    paddingVertical: '10@ms',
+    paddingHorizontal: '20@ms',
     alignSelf: 'center',
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: '16@ms',
     fontWeight: 'bold',
   },
 });

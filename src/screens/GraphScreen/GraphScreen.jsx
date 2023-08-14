@@ -1,7 +1,8 @@
 import React from 'react';
+import { View } from 'react-native';
 
 const GraphScreen = () => {
-  return <div>GraphScreen</div>;
+  return <View></View>;
 };
 
 export default GraphScreen;

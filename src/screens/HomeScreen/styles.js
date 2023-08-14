@@ -7,7 +7,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: '40@ms',
+    padding: '20@ms',
     backgroundColor: LIGHT_GRAY,
   },
   userContainer: {
