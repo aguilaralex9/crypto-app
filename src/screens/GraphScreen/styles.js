@@ -12,32 +12,23 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '20@ms',
     backgroundColor: LIGHT_GRAY,
   },
-  userContainer: {
-    justifyContent: 'start',
-    alignItems: 'start',
-    marginBottom: '15@ms',
-  },
-  filterContainer: {
+  graphContainer: {
+    height: '200@ms',
+    padding: '20@ms',
     flexDirection: 'row',
+  },
+  timerContainer: {
+    flexDirection: 'row',
+    alignSelf: 'center',
     alignItems: 'center',
-    marginVertical: '10@ms',
   },
-  label: {
-    fontSize: '18@ms',
+  coinName: {
+    fontSize: '20@ms',
     marginBottom: '10@ms',
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
-  input: {
-    width: '70%',
-    height: '40@ms',
-    backgroundColor: 'white',
-    borderColor: 'gray',
-    borderWidth: '1@ms',
-    borderRadius: '8@ms',
-    paddingHorizontal: '10@ms',
-    marginBottom: '5@ms',
-    marginRight: '10@ms',
-  },
-  displayText: {
+  timerText: {
     fontSize: '16@ms',
     fontWeight: 'bold',
   },

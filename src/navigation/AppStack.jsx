@@ -11,7 +11,11 @@ const AppStack = () => {
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <MainStack.Screen name='HomeScreen' component={HomeScreen} />
+      <MainStack.Screen
+        name='HomeScreen'
+        component={HomeScreen}
+        options={{ headerBackVisible: false }}
+      />
       <MainStack.Screen name='GraphScreen' component={GraphScreen} />
     </MainStack.Navigator>
   );

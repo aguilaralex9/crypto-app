@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { Button } from '../../components';
 import styles from './styles';
 
@@ -7,15 +9,23 @@ const LoginScreen = () => {
   const [user, setUser] = useState('');
   const [userError, setUserError] = useState(false);
 
+  const navigation = useNavigation();
+
   const handleInputChange = (text) => {
     setUser(text);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (user.trim() === '') {
       setUserError(true);
     } else {
-      setUserError(false);
+      try {
+        await AsyncStorage.setItem('usuario', user);
+        setUserError(false);
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        Alert.alert(error);
+      }
     }
   };
 
