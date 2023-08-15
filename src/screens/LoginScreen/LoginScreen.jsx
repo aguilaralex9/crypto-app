@@ -20,7 +20,7 @@ const LoginScreen = () => {
       setUserError(true);
     } else {
       try {
-        await AsyncStorage.setItem('usuario', user);
+        await AsyncStorage.setItem('user', user);
         setUserError(false);
         navigation.navigate('HomeScreen');
       } catch (error) {

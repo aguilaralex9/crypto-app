@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { View, FlatList, Text, TextInput } from 'react-native';
+import { View, FlatList, Text, TextInput, Overlay } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Button, CoinCard } from '../../components';
@@ -10,6 +11,7 @@ import styles from './styles';
 import { COLORS } from '../../constants/Colors';
 
 const HomeScreen = () => {
+  const [isConnected, setIsConnected] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('Missing information');
   const [coins, setCoins] = useState([]);
@@ -20,12 +22,11 @@ const HomeScreen = () => {
 
   const getUser = async () => {
     try {
-      const storedUser = await AsyncStorage.getItem('usuario');
+      const storedUser = await AsyncStorage.getItem('user');
 
       if (storedUser) {
         navigation.setOptions({ title: `Bienvenido, ${storedUser}!` });
       }
-      console.log(storedUser);
     } catch (error) {
       console.error('Error al recuperar el nombre de usuario:', error);
     }
@@ -34,10 +35,12 @@ const HomeScreen = () => {
   const searchAPI = async () => {
     try {
       const response = await coinsSearch.get();
+      const localList = JSON.stringify(response.data.data);
+      await AsyncStorage.setItem('myLocalList', localList);
       setCoins(response.data.data);
       setIsLoading(false);
     } catch (error) {
-      setErrorMessage('Something went wrong');
+      setErrorMessage('Algo salió mal');
       setIsLoading(false);
     }
   };
@@ -55,8 +58,14 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+    });
     getUser();
     searchAPI();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   if (isLoading) {
@@ -71,6 +80,11 @@ const HomeScreen = () => {
   }
   return (
     <View style={styles.container}>
+      {!isConnected && (
+        <Overlay isVisible={!isConnected} overlayStyle={styles.overlay}>
+          <Text>¡Desconectado! Verifica tu conexión a Internet.</Text>
+        </Overlay>
+      )}
       <View style={styles.filterContainer}>
         <TextInput
           style={styles.input}
@@ -85,7 +99,7 @@ const HomeScreen = () => {
           data={filteredCoins.length === 0 ? coins : filteredCoins}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => {
-            return <Text>{errorMessage}</Text>;
+            return <Text style={styles.errorText}>{errorMessage}</Text>;
           }}
           renderItem={({ item }) => (
             <CoinCard
@@ -93,11 +107,15 @@ const HomeScreen = () => {
               name={item.name}
               price={roundToHundredthPlace(item.price_usd)}
               percentage={item.percent_change_24h}
-              onPress={() => {
-                navigation.navigate('GraphScreen', {
-                  coinId: item.id,
-                });
-              }}
+              onPress={
+                isConnected
+                  ? () => {
+                      navigation.navigate('GraphScreen', {
+                        coinId: item.id,
+                      });
+                    }
+                  : () => {}
+              }
             />
           )}
         />

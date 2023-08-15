@@ -34,4 +34,24 @@ const roundToHundredthPlace = (inputStr) => {
   return roundedStr;
 };
 
-export { filterByPercentage, roundToHundredthPlace };
+const getCurrentTime = () => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds - minutes * 60;
+  return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+};
+
+export {
+  filterByPercentage,
+  roundToHundredthPlace,
+  getCurrentTime,
+  formatTime,
+};

@@ -16,7 +16,11 @@ const AppStack = () => {
         component={HomeScreen}
         options={{ headerBackVisible: false }}
       />
-      <MainStack.Screen name='GraphScreen' component={GraphScreen} />
+      <MainStack.Screen
+        name='GraphScreen'
+        component={GraphScreen}
+        options={{ headerTransparent: true, title: '' }}
+      />
     </MainStack.Navigator>
   );
 };

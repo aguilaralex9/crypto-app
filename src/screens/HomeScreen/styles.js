@@ -12,11 +12,6 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '20@ms',
     backgroundColor: LIGHT_GRAY,
   },
-  userContainer: {
-    justifyContent: 'start',
-    alignItems: 'start',
-    marginBottom: '15@ms',
-  },
   filterContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -37,9 +32,9 @@ const styles = ScaledSheet.create({
     marginBottom: '5@ms',
     marginRight: '10@ms',
   },
-  displayText: {
-    fontSize: '16@ms',
-    fontWeight: 'bold',
+  overlay: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   errorText: {
     fontSize: '14@ms',
